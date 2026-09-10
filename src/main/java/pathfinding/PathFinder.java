@@ -1,0 +1,86 @@
+package pathfinding;
+
+import model.Coordinates;
+import model.SimulationMap;
+
+import java.util.*;
+
+public class PathFinder {
+    public static List<Coordinates> findPath(Coordinates start, Coordinates target, SimulationMap map) {
+        Queue<Coordinates> queue = new LinkedList<>();
+        Set<Coordinates> visited = new HashSet<>();
+        Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        int[][] directions = {
+                {0, -1},
+                {0, 1},
+                {-1, 0},
+                {1, 0}
+        };
+
+        BFS:
+        while (!queue.isEmpty()) {
+            Coordinates current = queue.poll();
+
+
+            for (int[] direction : directions) {
+                int dx = direction[0];
+                int dy = direction[1];
+
+                Coordinates neighbor = new Coordinates(current.getX() + dx, current.getY() + dy);
+
+                if (neighbor.getX() < 0 || neighbor.getX() >= map.getWidth() || neighbor.getY() < 0 || neighbor.getY() >= map.getHeight()) {
+                    continue;
+                }
+
+
+                if (visited.contains(neighbor)) {
+                    continue;
+                }
+
+
+                if (neighbor.equals(target)) {
+                    cameFrom.put(neighbor, current);
+                    visited.add(neighbor);
+                    break BFS;
+                }
+
+                if (!map.isCellEmpty(neighbor)) {
+                    continue;
+                }
+
+
+                visited.add(neighbor);
+                cameFrom.put(neighbor, current);
+                queue.add(neighbor);
+
+            }
+        }
+
+
+        if (!cameFrom.containsKey(target) && !start.equals(target)) {
+            return null; // пути не существует
+        }
+
+        List<Coordinates> path = new LinkedList<>();
+        Coordinates step = target;
+
+        while (step != null) {
+            path.add(step);
+            step = cameFrom.get(step);
+        }
+
+        Collections.reverse(path);
+
+        return path;
+
+    }
+}
+
+
+
+
+
