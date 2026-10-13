@@ -15,6 +15,7 @@ import view.MapRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -49,7 +50,32 @@ public class Main {
 
         Simulation simulation = new Simulation(simulationMap, mapRenderer, initActions, turnActions);
 
-        simulation.startSimulation();
+        Thread simulationThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                simulation.startSimulation();
+            }
+        });
+
+        simulationThread.start();
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Нажмите Enter, чтобы поставить симуляцию на паузу.");
+        while (true) {
+
+            scanner.nextLine();
+
+            if (!simulation.isPaused()) {
+                simulation.pauseSimulation();
+                System.out.println("Симуляция на паузе. Нажмите Enter для продолжения.");
+            } else {
+                simulation.resumeSimulation();
+                System.out.println("Симуляция продолжена. Нажмите Enter для паузы.");
+            }
+        }
+
+
     }
 }
 

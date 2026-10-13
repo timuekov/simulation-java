@@ -13,6 +13,7 @@ public class Simulation {
     private final List<Action> turnActions;
     private boolean isRunning;
     private int turnCounter;
+    private volatile boolean isPaused;
 
 
     public Simulation(SimulationMap map, MapRenderer renderer, List<Action> initActions, List<Action> turnActions) {
@@ -30,10 +31,13 @@ public class Simulation {
         for (Action action : initActions) {
             action.perform(map);
         }
+
         renderer.render(map);
 
         while (isRunning) {
-            nextTurn();
+            if (!isPaused) {
+                nextTurn();
+            }
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -54,7 +58,15 @@ public class Simulation {
     }
 
     public void pauseSimulation() {
-        isRunning = false;
+        isPaused = true;
+    }
+
+    public void resumeSimulation() {
+        isPaused = false;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 }
 
