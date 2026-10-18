@@ -12,10 +12,21 @@ public class SimulationMap {
 
     private final Map<Coordinates, Entity> entities = new HashMap<>();
 
-
     public SimulationMap(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public <T extends Entity> List<T> getEntitiesBy(Class<T> type) {
+        List<T> matchingEntities = new ArrayList<>();
+
+        for (Entity entity : entities.values()) {
+            if (type.isInstance(entity)) {
+                matchingEntities.add(type.cast(entity));
+            }
+        }
+
+        return matchingEntities;
     }
 
     public int getWidth() {
@@ -67,17 +78,6 @@ public class SimulationMap {
         return herbivoreCoords;
     }
 
-    public List<Creature> getAllCreatures() {
-        List<Creature> creatures = new ArrayList<>();
-
-        for (Entity entity : entities.values()) {
-            if (entity instanceof Creature creature) {
-                creatures.add(creature);
-
-            }
-        }
-        return creatures;
-    }
 
     public int getOccupiedCellCount() {
         return entities.size();

@@ -1,5 +1,6 @@
 package action;
 
+import model.Grass;
 import model.SimulationMap;
 
 public class MaintainGrassAction extends Action{
@@ -8,7 +9,7 @@ public class MaintainGrassAction extends Action{
 
     @Override
     public void perform(SimulationMap map){
-        int currentGrass = map.getGrassCoordinates().size();
+        int currentGrass = map.getEntitiesBy(Grass.class).size();
 
         if (currentGrass < minimumGrass) {
             int grassToSpawn = minimumGrass - currentGrass;
@@ -22,7 +23,6 @@ public class MaintainGrassAction extends Action{
 
     public MaintainGrassAction(int minimumGrass){
         this.minimumGrass = minimumGrass;
-
 
     }
 }

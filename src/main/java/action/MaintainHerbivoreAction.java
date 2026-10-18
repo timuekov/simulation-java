@@ -1,10 +1,8 @@
 package action;
 
-import model.Creature;
 import model.Herbivore;
 import model.SimulationMap;
 
-import java.util.List;
 
 public class MaintainHerbivoreAction extends Action {
 
@@ -14,14 +12,8 @@ public class MaintainHerbivoreAction extends Action {
 
     @Override
     public void perform(SimulationMap map) {
-        List<Creature> creatures = map.getAllCreatures();
-        int currentHerbivores = 0;
+        int currentHerbivores = map.getEntitiesBy(Herbivore.class).size();
 
-        for (Creature creature : creatures) {
-            if (creature instanceof Herbivore) {
-                currentHerbivores += 1;
-            }
-        }
         if (currentHerbivores < minimumHerbivores) {
             int herbivoresToSpawn = minimumHerbivores - currentHerbivores;
             HerbivoreSpawnAction herbivoreSpawnAction = new HerbivoreSpawnAction(herbivoresToSpawn, hp, speed);

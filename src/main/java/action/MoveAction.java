@@ -8,7 +8,7 @@ import java.util.List;
 public class MoveAction extends Action {
     @Override
     public void perform(SimulationMap map) {
-        List<Creature> creatures = map.getAllCreatures();
+        List<Creature> creatures = map.getEntitiesBy(Creature.class);
 
         for (Creature creature: creatures) {
             if (map.getEntity(creature.getCoordinates()) == creature) {
