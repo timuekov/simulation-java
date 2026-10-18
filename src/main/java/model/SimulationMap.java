@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class SimulationMap {
 
     private final int width;
@@ -40,21 +41,32 @@ public class SimulationMap {
     public void setEntity(Coordinates coordinates, Entity entity) {
         if (isCellEmpty(coordinates)) {
             entities.put(coordinates, entity);
+        } else {
+            throw new IllegalStateException("Координаты " + coordinates + " уже заняты!");
         }
     }
 
     public Entity getEntity(Coordinates coordinates) {
+        validate(coordinates);
         return entities.get(coordinates);
     }
 
     public Entity removeEntity(Coordinates coordinates) {
+        validate(coordinates);
         return entities.remove(coordinates);
     }
 
-    public boolean isCellEmpty(Coordinates coordinates) {
-        return (entities.get(coordinates) == null);
-
+    private void validate(Coordinates coordinates) {
+        if (coordinates.getX() < 0 || coordinates.getX() >= width || coordinates.getY() < 0 || coordinates.getY() >= height) {
+            throw new IllegalArgumentException("Координаты " + coordinates + " вышли за пределы карты");
+        }
     }
+
+    public boolean isCellEmpty(Coordinates coordinates) {
+        validate(coordinates);
+        return (entities.get(coordinates) == null);
+    }
+
 
     public List<Coordinates> getGrassCoordinates() {
         List<Coordinates> grassCoords = new ArrayList<>();
