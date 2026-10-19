@@ -21,7 +21,7 @@ public class MapRenderer {
             // Проходим по столбцам внутри текущей строки (ширина карты)
             for (int x = 0; x < map.getWidth(); x++) {
                 Coordinates coordinates = new Coordinates(x, y);
-                Entity entity = map.getEntity(coordinates);
+                Entity entity = map.getEntity(coordinates).orElse(null);
 
                 System.out.print(getEntitySprite(entity));
             }

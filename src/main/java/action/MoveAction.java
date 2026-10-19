@@ -11,7 +11,9 @@ public class MoveAction extends Action {
         List<Creature> creatures = map.getEntitiesBy(Creature.class);
 
         for (Creature creature: creatures) {
-            if (map.getEntity(creature.getCoordinates()) == creature) {
+            if (map.getEntity(creature.getCoordinates())
+                    .filter(entity -> entity == creature)
+                    .isPresent()) {
                 creature.makeMove(map);
             }
         }

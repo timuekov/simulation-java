@@ -3,6 +3,7 @@ package model;
 import pathfinding.PathFinder;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Predator extends Creature {
     private final int attackPower;
@@ -30,11 +31,13 @@ public class Predator extends Creature {
         }
 
         if (path.size() == 2) {
-            Entity herb = map.getEntity(nearestHerbivore);
-            if (herb instanceof Herbivore herbivore) {
-                herbivore.takeDamage(this.attackPower);
-                if (herbivore.getHp() <= 0) {
-                    map.removeEntity(nearestHerbivore);
+            Optional<Entity> herb = map.getEntity(nearestHerbivore);
+            if (herb.isPresent()) {
+                if (herb.get() instanceof Herbivore herbivore) {
+                    herbivore.takeDamage(this.attackPower);
+                    if (herbivore.getHp() <= 0) {
+                        map.removeEntity(nearestHerbivore);
+                    }
                 }
             }
             return;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Optional;
 
 public class SimulationMap {
 
@@ -46,9 +46,9 @@ public class SimulationMap {
         }
     }
 
-    public Entity getEntity(Coordinates coordinates) {
+    public Optional<Entity> getEntity(Coordinates coordinates) {
         validate(coordinates);
-        return entities.get(coordinates);
+        return Optional.ofNullable(entities.get(coordinates));
     }
 
     public Entity removeEntity(Coordinates coordinates) {
