@@ -51,9 +51,9 @@ public class SimulationMap {
         return Optional.ofNullable(entities.get(coordinates));
     }
 
-    public Entity removeEntity(Coordinates coordinates) {
+    public void removeEntity(Coordinates coordinates) {
         validate(coordinates);
-        return entities.remove(coordinates);
+        entities.remove(coordinates);
     }
 
     private void validate(Coordinates coordinates) {
