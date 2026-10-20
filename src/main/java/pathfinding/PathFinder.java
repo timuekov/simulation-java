@@ -25,8 +25,8 @@ public class PathFinder {
                 {1, 0}
         };
 
-        BFS:
-        while (!queue.isEmpty()) {
+
+        while (!queue.isEmpty() && foundTarget == null) {
             Coordinates current = queue.poll();
 
 
@@ -52,7 +52,7 @@ public class PathFinder {
                     foundTarget = neighbor;
                     cameFrom.put(neighbor, current);
                     visited.add(neighbor);
-                    break BFS;
+                    break;
                 }
 
                 if (!map.isCellEmpty(neighbor)) {
