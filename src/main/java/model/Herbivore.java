@@ -13,7 +13,7 @@ public class Herbivore extends Creature {
     @Override
     public void makeMove(SimulationMap map) {
 
-        List<Coordinates> path = PathFinder.findPath(getCoordinates(), Grass.class, map);
+        List<Coordinates> path = PathFinder.find(getCoordinates(), Grass.class, map);
         if (path.isEmpty()) {
             return;
         }

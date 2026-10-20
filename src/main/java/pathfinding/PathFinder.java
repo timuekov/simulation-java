@@ -6,7 +6,7 @@ import model.SimulationMap;
 
 import java.util.*;
 
-public class PathFinder {
+public final class PathFinder {
 
     private static final List<Coordinates> SHIFT_COORDINATES =
             List.of(
@@ -16,7 +16,10 @@ public class PathFinder {
                     new Coordinates(1, 0)
             );
 
-    public static <T extends Entity> List<Coordinates> findPath(Coordinates start, Class<T> target, SimulationMap map) {
+    private PathFinder() {
+    }
+
+    public static <T extends Entity> List<Coordinates> find(Coordinates start, Class<T> target, SimulationMap map) {
 
         Queue<Coordinates> queue = new LinkedList<>();
         Set<Coordinates> visited = new HashSet<>();

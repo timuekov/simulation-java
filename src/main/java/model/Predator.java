@@ -20,7 +20,7 @@ public class Predator extends Creature {
     @Override
     public void makeMove(SimulationMap map) {
 
-        List<Coordinates> path = PathFinder.findPath(getCoordinates(), Herbivore.class, map);
+        List<Coordinates> path = PathFinder.find(getCoordinates(), Herbivore.class, map);
         if (path.isEmpty()) {
             return;
         }
