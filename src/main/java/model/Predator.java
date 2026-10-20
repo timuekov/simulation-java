@@ -19,16 +19,14 @@ public class Predator extends Creature {
 
     @Override
     public void makeMove(SimulationMap map) {
-        List<Coordinates> allHerbivore = map.getHerbivoreCoordinates();
-        Coordinates nearestHerbivore = findNearestTarget(allHerbivore);
-        if (nearestHerbivore == null) {
+
+        List<Coordinates> path = PathFinder.findPath(getCoordinates(), Herbivore.class, map);
+        if (path.isEmpty()) {
             return;
         }
 
-        List<Coordinates> path = PathFinder.findPath(getCoordinates(), nearestHerbivore, map);
-        if (path == null) {
-            return;
-        }
+        Coordinates nearestHerbivore;
+        nearestHerbivore = path.get(path.size() - 1);
 
         if (path.size() == 2) {
             Optional<Entity> herb = map.getEntity(nearestHerbivore);

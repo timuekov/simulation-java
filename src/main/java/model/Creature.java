@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public abstract class Creature extends Entity {
     private int hp;
     private final int speed;
@@ -24,26 +22,6 @@ public abstract class Creature extends Entity {
 
     public int getSpeed() {
         return speed;
-    }
-
-
-    public Coordinates findNearestTarget(List<Coordinates> targets) {
-        Coordinates nearest = null;
-        int minDistance = Integer.MAX_VALUE;
-
-        for (Coordinates targetCoords : targets) {
-            int dx = Math.abs(getCoordinates().getX() - targetCoords.getX());
-            int dy = Math.abs(getCoordinates().getY() - targetCoords.getY());
-            int distance = dx + dy;
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                nearest = targetCoords;
-            }
-        }
-
-        return nearest;
-
     }
 
 }

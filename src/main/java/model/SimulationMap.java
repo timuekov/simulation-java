@@ -68,29 +68,6 @@ public class SimulationMap {
     }
 
 
-    public List<Coordinates> getGrassCoordinates() {
-        List<Coordinates> grassCoords = new ArrayList<>();
-
-        for (Entity entity : entities.values()) {
-            if (entity instanceof Grass grass) {
-                grassCoords.add(grass.getCoordinates());
-            }
-        }
-        return grassCoords;
-    }
-
-    public List<Coordinates> getHerbivoreCoordinates() {
-        List<Coordinates> herbivoreCoords = new ArrayList<>();
-
-        for (Entity entity : entities.values()) {
-            if (entity instanceof Herbivore herbivore) {
-                herbivoreCoords.add(herbivore.getCoordinates());
-            }
-        }
-        return herbivoreCoords;
-    }
-
-
     public int getOccupiedCellCount() {
         return entities.size();
 

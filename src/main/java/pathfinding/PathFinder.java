@@ -1,15 +1,19 @@
 package pathfinding;
 
 import model.Coordinates;
+import model.Entity;
 import model.SimulationMap;
 
 import java.util.*;
 
 public class PathFinder {
-    public static List<Coordinates> findPath(Coordinates start, Coordinates target, SimulationMap map) {
+    public static <T extends Entity> List<Coordinates> findPath(Coordinates start, Class<T> target, SimulationMap map) {
+
         Queue<Coordinates> queue = new LinkedList<>();
         Set<Coordinates> visited = new HashSet<>();
         Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
+
+        Coordinates foundTarget = null;
 
         queue.add(start);
         visited.add(start);
@@ -41,8 +45,11 @@ public class PathFinder {
                     continue;
                 }
 
+                Optional<Entity> entity = map.getEntity(neighbor);
 
-                if (neighbor.equals(target)) {
+                if (entity.isPresent() && target.isInstance(entity.get())) {
+
+                    foundTarget = neighbor;
                     cameFrom.put(neighbor, current);
                     visited.add(neighbor);
                     break BFS;
@@ -61,12 +68,12 @@ public class PathFinder {
         }
 
 
-        if (!cameFrom.containsKey(target) && !start.equals(target)) {
-            return null; // пути не существует
+        if (foundTarget == null) {
+            return new ArrayList<>();
         }
 
         List<Coordinates> path = new LinkedList<>();
-        Coordinates step = target;
+        Coordinates step = foundTarget;
 
         while (step != null) {
             path.add(step);

@@ -13,18 +13,14 @@ public class Herbivore extends Creature {
     @Override
     public void makeMove(SimulationMap map) {
 
-        List<Coordinates> allGrass = map.getGrassCoordinates();
-        Coordinates nearestGrass = findNearestTarget(allGrass);
-
-
-        if (nearestGrass == null) {
+        List<Coordinates> path = PathFinder.findPath(getCoordinates(), Grass.class, map);
+        if (path.isEmpty()) {
             return;
         }
 
-        List<Coordinates> path = PathFinder.findPath(getCoordinates(), nearestGrass, map);
-        if (path == null) {
-            return;
-        }
+        Coordinates nearestGrass;
+        nearestGrass = path.get(path.size() - 1);
+
 
         int safeIndex = Math.min(getSpeed(), path.size() - 1);
         Coordinates destination = path.get(safeIndex);
