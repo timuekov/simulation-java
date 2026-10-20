@@ -7,6 +7,15 @@ import model.SimulationMap;
 import java.util.*;
 
 public class PathFinder {
+
+    private static final List<Coordinates> SHIFT_COORDINATES =
+            List.of(
+                    new Coordinates(0, -1),
+                    new Coordinates(0, 1),
+                    new Coordinates(-1, 0),
+                    new Coordinates(1, 0)
+            );
+
     public static <T extends Entity> List<Coordinates> findPath(Coordinates start, Class<T> target, SimulationMap map) {
 
         Queue<Coordinates> queue = new LinkedList<>();
@@ -18,21 +27,14 @@ public class PathFinder {
         queue.add(start);
         visited.add(start);
 
-        int[][] directions = {
-                {0, -1},
-                {0, 1},
-                {-1, 0},
-                {1, 0}
-        };
-
 
         while (!queue.isEmpty() && foundTarget == null) {
             Coordinates current = queue.poll();
 
 
-            for (int[] direction : directions) {
-                int dx = direction[0];
-                int dy = direction[1];
+            for (Coordinates direction : SHIFT_COORDINATES) {
+                int dx = direction.getX();
+                int dy = direction.getY();
 
                 Coordinates neighbor = new Coordinates(current.getX() + dx, current.getY() + dy);
 
