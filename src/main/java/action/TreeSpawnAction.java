@@ -12,7 +12,8 @@ public class TreeSpawnAction extends SpawnAction {
 
     @Override
     protected Entity createEntity(Coordinates coordinates) {
-        return new Tree(coordinates);
+
+        return new Tree();
     }
 }
 

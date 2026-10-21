@@ -7,12 +7,13 @@ import model.Rock;
 public class RockSpawnAction extends SpawnAction {
 
     public RockSpawnAction(int count) {
-        super(count); // передаём count наверх, в конструктор SpawnAction
+        super(count);
     }
 
     @Override
     protected Entity createEntity(Coordinates coordinates) {
-        return new Rock(coordinates);
+
+        return new Rock();
     }
 }
 

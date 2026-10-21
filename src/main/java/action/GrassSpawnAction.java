@@ -12,7 +12,8 @@ public class GrassSpawnAction extends SpawnAction {
 
     @Override
     protected Entity createEntity(Coordinates coordinates) {
-        return new Grass(coordinates);
+
+        return new Grass();
     }
 }
 
