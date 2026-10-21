@@ -1,7 +1,5 @@
 package model;
 
-import pathfinding.PathFinder;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +7,7 @@ public class Predator extends Creature {
     private final int attackPower;
 
     public Predator(Coordinates coordinates, int hp, int speed, int attackPower) {
-        super(coordinates, hp, speed);
+        super(coordinates, hp, speed, Herbivore.class);
         this.attackPower = attackPower;
     }
 
@@ -20,7 +18,7 @@ public class Predator extends Creature {
     @Override
     public void makeMove(SimulationMap map) {
 
-        List<Coordinates> path = PathFinder.find(getCoordinates(), Herbivore.class, map);
+        List<Coordinates> path = findPath(map);
         if (path.isEmpty()) {
             return;
         }
