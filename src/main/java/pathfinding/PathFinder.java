@@ -36,12 +36,12 @@ public final class PathFinder {
 
 
             for (Coordinates direction : SHIFT_COORDINATES) {
-                int dx = direction.getX();
-                int dy = direction.getY();
+                int dx = direction.x();
+                int dy = direction.y();
 
-                Coordinates neighbor = new Coordinates(current.getX() + dx, current.getY() + dy);
+                Coordinates neighbor = new Coordinates(current.x() + dx, current.y() + dy);
 
-                if (neighbor.getX() < 0 || neighbor.getX() >= map.getWidth() || neighbor.getY() < 0 || neighbor.getY() >= map.getHeight()) {
+                if (neighbor.x() < 0 || neighbor.x() >= map.getWidth() || neighbor.y() < 0 || neighbor.y() >= map.getHeight()) {
                     continue;
                 }
 

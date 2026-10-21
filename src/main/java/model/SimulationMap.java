@@ -57,7 +57,7 @@ public class SimulationMap {
     }
 
     private void validate(Coordinates coordinates) {
-        if (coordinates.getX() < 0 || coordinates.getX() >= width || coordinates.getY() < 0 || coordinates.getY() >= height) {
+        if (coordinates.x() < 0 || coordinates.x() >= width || coordinates.y() < 0 || coordinates.y() >= height) {
             throw new IllegalArgumentException("Координаты " + coordinates + " вышли за пределы карты");
         }
     }
