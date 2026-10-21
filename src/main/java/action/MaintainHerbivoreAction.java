@@ -10,6 +10,12 @@ public class MaintainHerbivoreAction extends Action {
     private final int hp;
     private final int speed;
 
+    public MaintainHerbivoreAction(int minimumHerbivores, int hp, int speed) {
+        this.minimumHerbivores = minimumHerbivores;
+        this.hp = hp;
+        this.speed = speed;
+    }
+
     @Override
     public void perform(SimulationMap map) {
         int currentHerbivores = map.getEntitiesBy(Herbivore.class).size();
@@ -21,9 +27,4 @@ public class MaintainHerbivoreAction extends Action {
         }
     }
 
-    public MaintainHerbivoreAction(int minimumHerbivores, int hp, int speed) {
-        this.minimumHerbivores = minimumHerbivores;
-        this.hp = hp;
-        this.speed = speed;
-    }
 }
