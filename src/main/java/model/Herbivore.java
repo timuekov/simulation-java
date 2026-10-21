@@ -18,22 +18,16 @@ public class Herbivore extends Creature {
             return;
         }
 
-        Coordinates nearestGrass;
-        nearestGrass = path.get(path.size() - 1);
-
+        Coordinates nearestGrass = path.get(path.size() - 1);
 
         int safeIndex = Math.min(getSpeed(), path.size() - 1);
         Coordinates destination = path.get(safeIndex);
 
         if (destination.equals(nearestGrass)) {
             map.removeEntity(nearestGrass);
-            map.removeEntity(getCoordinates());
-            setCoordinates(nearestGrass);
-            map.setEntity(nearestGrass, this);
+            moveTo(nearestGrass, map);
         } else {
-            map.removeEntity(getCoordinates());
-            setCoordinates(destination);
-            map.setEntity(destination, this);
+            moveTo(destination, map);
 
         }
 

@@ -25,8 +25,7 @@ public class Predator extends Creature {
             return;
         }
 
-        Coordinates nearestHerbivore;
-        nearestHerbivore = path.get(path.size() - 1);
+        Coordinates nearestHerbivore = path.get(path.size() - 1);
 
         if (path.size() == 2) {
             Optional<Entity> herb = map.getEntity(nearestHerbivore);
@@ -46,9 +45,7 @@ public class Predator extends Creature {
 
         Coordinates destination = path.get(safeIndex);
 
-        map.removeEntity(getCoordinates());
-        setCoordinates(destination);
-        map.setEntity(destination, this);
+        moveTo(destination, map);
     }
 
 }

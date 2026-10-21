@@ -12,6 +12,12 @@ public abstract class Creature extends Entity {
 
     public abstract void makeMove(SimulationMap map);
 
+    protected void moveTo(Coordinates destination, SimulationMap map) {
+        map.removeEntity(getCoordinates());
+        setCoordinates(destination);
+        map.setEntity(destination, this);
+    }
+
     public int getHp() {
         return hp;
     }
