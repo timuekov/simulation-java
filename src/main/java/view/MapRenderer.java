@@ -1,6 +1,13 @@
 package view;
 
-import model.*;
+import model.Coordinates;
+import model.Entity;
+import model.Grass;
+import model.Herbivore;
+import model.Predator;
+import model.Rock;
+import model.SimulationMap;
+import model.Tree;
 
 /**
  * Класс, отвечающий за визуализацию (отрисовку) игрового поля в консоли.
