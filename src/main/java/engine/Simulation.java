@@ -16,21 +16,28 @@ public class Simulation {
     private volatile boolean isPaused;
 
 
-    public Simulation(SimulationMap map, MapRenderer renderer, List<Action> initActions, List<Action> turnActions) {
+    public Simulation(SimulationMap map, List<Action> initActions, List<Action> turnActions) {
+
         this.map = map;
-        this.renderer = renderer;
+        this.renderer = new MapRenderer();
         this.initActions = initActions;
         this.turnActions = turnActions;
         this.turnCounter = 0;
+
+        performActions(initActions);
+
+    }
+
+    private void performActions(List<Action> actions) {
+        for (Action action : actions) {
+            action.perform(map);
+
+        }
     }
 
 
     public void startSimulation() {
         isRunning = true;
-
-        for (Action action : initActions) {
-            action.perform(map);
-        }
 
         renderer.render(map);
 
@@ -48,10 +55,8 @@ public class Simulation {
 
 
     public void nextTurn() {
-        for (Action action : turnActions) {
-            action.perform(map);
-        }
-        turnCounter += 1;
+        performActions(turnActions);
+        turnCounter++;
         System.out.println("Ход: " + turnCounter);
         renderer.render(map);
 

@@ -11,7 +11,6 @@ import model.Predator;
 import model.Rock;
 import model.SimulationMap;
 import model.Tree;
-import view.MapRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ public class Main {
     public static void main(String[] args) {
 
         SimulationMap simulationMap = new SimulationMap(10, 10);
-        MapRenderer mapRenderer = new MapRenderer();
 
         SpawnAction grassSpawnAction = new SpawnAction(2, coordinates -> new Grass());
         SpawnAction rockSpawnAction = new SpawnAction(3, coordinates -> new Rock());
@@ -50,7 +48,7 @@ public class Main {
         turnActions.add(herbivoreReSpawnAction);
 
 
-        Simulation simulation = new Simulation(simulationMap, mapRenderer, initActions, turnActions);
+        Simulation simulation = new Simulation(simulationMap, initActions, turnActions);
 
         Thread simulationThread = new Thread(new Runnable() {
             @Override
