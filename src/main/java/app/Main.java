@@ -1,22 +1,22 @@
 package app;
 
 import action.Action;
-import action.GrassSpawnAction;
-import action.HerbivoreSpawnAction;
 import action.MoveAction;
-import action.PredatorSpawnAction;
 import action.ReSpawnAction;
-import action.RockSpawnAction;
-import action.TreeSpawnAction;
+import action.SpawnAction;
 import engine.Simulation;
 import model.Grass;
 import model.Herbivore;
+import model.Predator;
+import model.Rock;
 import model.SimulationMap;
+import model.Tree;
 import view.MapRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -24,11 +24,12 @@ public class Main {
         SimulationMap simulationMap = new SimulationMap(10, 10);
         MapRenderer mapRenderer = new MapRenderer();
 
-        RockSpawnAction rockSpawnAction = new RockSpawnAction(3);
-        TreeSpawnAction treeSpawnAction = new TreeSpawnAction(3);
-        PredatorSpawnAction predatorSpawnAction = new PredatorSpawnAction(3, 5, 2, 4);
-        HerbivoreSpawnAction herbivoreSpawnAction = new HerbivoreSpawnAction(5, 10, 3);
-        GrassSpawnAction grassSpawnAction = new GrassSpawnAction(2);
+        SpawnAction grassSpawnAction = new SpawnAction(2, coordinates -> new Grass());
+        SpawnAction rockSpawnAction = new SpawnAction(3, coordinates -> new Rock());
+        SpawnAction treeSpawnAction = new SpawnAction(3, coordinates -> new Tree());
+
+        SpawnAction predatorSpawnAction = new SpawnAction(3, coordinates -> new Predator(coordinates, 5, 2, 4));
+        SpawnAction herbivoreSpawnAction = new SpawnAction(5, coordinates -> new Herbivore(coordinates, 10, 3));
 
         List<Action> initActions = new ArrayList<>();
         initActions.add(rockSpawnAction);
@@ -42,10 +43,10 @@ public class Main {
         List<Action> turnActions = new ArrayList<>();
         turnActions.add(moveAction);
 
-        ReSpawnAction reSpawnAction = new ReSpawnAction(2, Grass.class, GrassSpawnAction::new);
-        turnActions.add(reSpawnAction);
+        ReSpawnAction grassReSpawnAction = new ReSpawnAction(2, Grass.class, count -> new SpawnAction(count, coordinates -> new Grass()));
+        turnActions.add(grassReSpawnAction);
 
-        ReSpawnAction herbivoreReSpawnAction = new ReSpawnAction(2, Herbivore.class, count -> new HerbivoreSpawnAction(count, 10, 3));
+        ReSpawnAction herbivoreReSpawnAction = new ReSpawnAction(2, Herbivore.class, count -> new SpawnAction(count, coordinates -> new Herbivore(coordinates, 10, 3)));
         turnActions.add(herbivoreReSpawnAction);
 
 

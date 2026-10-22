@@ -5,17 +5,18 @@ import model.Entity;
 import model.SimulationMap;
 
 import java.util.Random;
+import java.util.function.Function;
 
-public abstract class SpawnAction extends Action {
+public class SpawnAction extends Action {
 
     private final int count;
+    private final Function<Coordinates, Entity> entityCreator;
 
-    public SpawnAction(int count) {
+    public SpawnAction(int count, Function<Coordinates, Entity> entityCreator) {
 
         this.count = count;
+        this.entityCreator = entityCreator;
     }
-
-    protected abstract Entity createEntity(Coordinates coordinates);
 
     public void perform(SimulationMap map) {
         for (int i = 0; i < count; i++) {
@@ -24,7 +25,7 @@ public abstract class SpawnAction extends Action {
             }
 
             Coordinates coordinates = getRandomEmptyCoordinates(map);
-            Entity entity = createEntity(coordinates);
+            Entity entity = entityCreator.apply(coordinates);
             map.setEntity(coordinates, entity);
         }
     }
