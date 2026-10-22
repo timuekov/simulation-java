@@ -3,13 +3,14 @@ package app;
 import action.Action;
 import action.GrassSpawnAction;
 import action.HerbivoreSpawnAction;
-import action.MaintainGrassAction;
-import action.MaintainHerbivoreAction;
 import action.MoveAction;
 import action.PredatorSpawnAction;
+import action.ReSpawnAction;
 import action.RockSpawnAction;
 import action.TreeSpawnAction;
 import engine.Simulation;
+import model.Grass;
+import model.Herbivore;
 import model.SimulationMap;
 import view.MapRenderer;
 
@@ -20,7 +21,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        SimulationMap simulationMap = new SimulationMap(5, 5);
+        SimulationMap simulationMap = new SimulationMap(10, 10);
         MapRenderer mapRenderer = new MapRenderer();
 
         RockSpawnAction rockSpawnAction = new RockSpawnAction(3);
@@ -41,11 +42,11 @@ public class Main {
         List<Action> turnActions = new ArrayList<>();
         turnActions.add(moveAction);
 
-        MaintainGrassAction maintainGrassAction = new MaintainGrassAction(2);
-        turnActions.add(maintainGrassAction);
+        ReSpawnAction reSpawnAction = new ReSpawnAction(2, Grass.class, GrassSpawnAction::new);
+        turnActions.add(reSpawnAction);
 
-        MaintainHerbivoreAction maintainHerbivoreAction = new MaintainHerbivoreAction(2, 10, 3);
-        turnActions.add(maintainHerbivoreAction);
+        ReSpawnAction herbivoreReSpawnAction = new ReSpawnAction(2, Herbivore.class, count -> new HerbivoreSpawnAction(count, 10, 3));
+        turnActions.add(herbivoreReSpawnAction);
 
 
         Simulation simulation = new Simulation(simulationMap, mapRenderer, initActions, turnActions);
