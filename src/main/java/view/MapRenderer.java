@@ -29,8 +29,7 @@ public class MapRenderer {
             for (int x = 0; x < map.getWidth(); x++) {
                 Coordinates coordinates = new Coordinates(x, y);
                 Entity entity = map.getEntity(coordinates).orElse(null);
-
-                System.out.print(getEntitySprite(entity));
+                System.out.printf("%-4s", getEntitySprite(entity));
             }
             // В конце строки переносим курсор на новый ряд
             System.out.println();
@@ -52,7 +51,7 @@ public class MapRenderer {
             return "🌿";
         }
         if (entity instanceof Rock) {
-            return "⛰";
+            return "⛰\uFE0F";
         }
         if (entity instanceof Tree) {
             return "🌲";
